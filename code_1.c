@@ -144,18 +144,39 @@ void	freedom_split(spl2, spl3)
 		ft_free_split(spl3);
 	(perror("split error"), exit (1));
 }
-int	waiting(int pid_1_2[2], int status[0], int status[1])
+void	mainn_util_1(int pid_0)
 {
-	waitpid(pid_1_2[0], &status[0], 0);
-	waitpid(pid_1_2[1], &status[0], 0);
-	if (WIFEXITED(status[0]))
-		status[1] = WEXITSTATUS(status[0]);
+	if (pid_0 < 0)
+		perror("fork son_1's function error");
+		exit (1);
+}
+
+void	main_util_2(int pid_1)
+{
+	if (pid_1 < 0)
+		perror("fork son_2's function error");
+		exit (1);
+}
+
+void	main_util_3(int fd_pipe[2], char **spl3)
+{
+	close(fd_pipe[0]);
+	ft_free_split(spl3);
+}
+
+int	waiting(int pid[2], int status_0, int status_1)
+{
+	waitpid(pid[0], &status_0, 0);
+	waitpid(pid[1], &status_0, 0);
+	if (WIFEXITED(status_0))
+		status_1 = WEXITSTATUS(status_0);
+	return (status_1)
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	int	fd_pipe[2];
-	int	pid_1_2[2];
+	int	pid[2];
 	int	status[3];
 	char **spl2;
 	char **spl3;
@@ -167,20 +188,16 @@ int	main(int argc, char **argv, char **env)
 	spl3 = ft_split(argv[3], ' ');
 	if (spl2 == NULL || spl3 == NULL)
 		freedom_split(spl2, spl3);
-	pid_1_2[0] = fork();
-	if (pid_1_2[0] < 0)
-		(perror("fork son_1's function error"), exit (1));
-	if (pid_1_2[0] == 0)
+	pid[0] = fork();
+	main_util_1(pid[0]);
+	if (pid[0] == 0)
 		son_1(argv, env, fd_pipe, spl2);
 	(close(fd_pipe[1]), ft_free_split(spl2));
-	pid_1_2[1] = fork();
-	if (pid_1_2[1] < 0)
-		(perror("fork son_2's function error"), exit (1));
-	if (pid_1_2[1] == 0)
+	pid[1] = fork();
+	main_util_2(pid[1]);
+	if (pid[1] == 0)
 		son_2(argv, env, fd_pipe, spl3);
-	close(fd_pipe[0]);
-	ft_free_split(spl3);
-	status[2] = waiting(pid_1_2, status[0], status[1]);
+	main_util_3(fd_pipe, spl3);
+	status[2] = waiting(pid, status[0], status[1]);
 	return (status[2]);
 }
-
