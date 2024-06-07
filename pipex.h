@@ -43,7 +43,7 @@ void	ft_free(char **res);
 // Declaraciones de funciones de aux_2
 void	take_errors(int argc);
 void	ft_free_split(char **split);
-void	freedom_split(spl2, spl3);
+void	freedom_split(char **spl2, char **spl3);
 void	main_util_1(int pid_0);
 void	main_util_2(int pid_1);
 

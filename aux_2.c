@@ -32,7 +32,7 @@ void	ft_free_split(char **split)
 	free (split);
 }
 
-void	freedom_split(spl2, spl3)
+void	freedom_split(char **spl2, char **spl3)
 {
 	if (spl2)
 		ft_free_split(spl2);
