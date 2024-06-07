@@ -1,15 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   code_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgonzal2 <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:03:55 by lgonzal2          #+#    #+#             */
-/*   Updated: 2023/02/18 14:31:10 by lgonzal2         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:07:24 by lgonzal2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
+
+void	main_util_3(int fd_pipe[2], char **spl3)
+{
+	close(fd_pipe[0]);
+	ft_free_split(spl3);
+}
+
+int	waiting(int pid[2], int status_0, int status_1)
+{
+	waitpid(pid[0], &status_0, 0);
+	waitpid(pid[1], &status_0, 0);
+	if (WIFEXITED(status_0))
+		status_1 = WEXITSTATUS(status_0);
+	return (status_1);
+}
 
 char	*take_cdm(char *argv)
 {

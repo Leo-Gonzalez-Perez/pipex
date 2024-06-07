@@ -13,7 +13,8 @@
 # Variables
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3
-SRC = code_1.c code_2.c code_3.c code_4.c
+SRC = main_and_sons.c split_joing_paths.c aux_1.c aux_2.c aux_3.c
+
 OBJ = $(SRC:.c=.o)
 NAME = pipex
 

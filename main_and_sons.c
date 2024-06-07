@@ -16,7 +16,7 @@ void	son_2_b(char *p_cmd_2, char **env, char **spl3)
 	char	**paths;
 	char	*x;
 	int		i;
-	
+
 	i = 0;
 	paths = find_the_path(env);
 	while (paths[i] != NULL)
@@ -48,7 +48,7 @@ void	son_2(char **argv, char **env, int fd_pipe[2], char **spl3)
 	fd_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_out == -1)
 	{
-	    ft_free_split(spl3);
+		ft_free_split(spl3);
 		(perror("open son_2's function error"), exit (1));
 	}
 	(dup2(fd_out, 1), close(fd_out), dup2(fd_pipe[0], 0), close(fd_pipe[0]));
@@ -89,7 +89,7 @@ void	son_1_b(char **env, char *p_cmd_1, char **spl2)
 	execve(x, spl2, env);
 	ft_free_split(spl2);
 	free(x);
-    (perror("execve's 1 error"), exit (1));
+	(perror("execve's 1 error"), exit (1));
 }
 
 void	son_1(char **argv, char **env, int fd_pipe[2], char **spl2)
@@ -102,7 +102,7 @@ void	son_1(char **argv, char **env, int fd_pipe[2], char **spl2)
 	if (fd_in == -1)
 	{
 		ft_free_split(spl2);
-    	(perror("open son_1's function error"), exit (1));
+		(perror("open son_1's function error"), exit (1));
 	}
 	(dup2(fd_in, 0), close(fd_in), dup2(fd_pipe[1], 1), close(fd_pipe[1]));
 	p_cmd_1 = take_cdm(argv[2]);
@@ -110,76 +110,20 @@ void	son_1(char **argv, char **env, int fd_pipe[2], char **spl2)
 	if (road || env == NULL || env[0] == NULL)
 	{
 		execve(p_cmd_1, spl2, env);
-	    ft_free_split(spl2);
-    	perror("execve's son 1 error");
+		ft_free_split(spl2);
+		perror("execve's son 1 error");
 		exit (1);
 	}
 	son_1_b(env, p_cmd_1, spl2);
 }
-void	take_errors(int argc)
-{
-	if (argc != 5)
-		(perror("too few or too much arguments"), exit (1));
-}
-
-void ft_free_split(char **split)
-{
-    int i = 0;
-
-    if (!split)
-        return;
-    while (split[i])
-    {
-        free(split[i]);
-        i++;
-    }
-    free(split);
-}
-
-void	freedom_split(spl2, spl3)
-{
-	if  (spl2)
-		ft_free_split(spl2);
-	if  (spl3)
-		ft_free_split(spl3);
-	(perror("split error"), exit (1));
-}
-void	mainn_util_1(int pid_0)
-{
-	if (pid_0 < 0)
-		perror("fork son_1's function error");
-		exit (1);
-}
-
-void	main_util_2(int pid_1)
-{
-	if (pid_1 < 0)
-		perror("fork son_2's function error");
-		exit (1);
-}
-
-void	main_util_3(int fd_pipe[2], char **spl3)
-{
-	close(fd_pipe[0]);
-	ft_free_split(spl3);
-}
-
-int	waiting(int pid[2], int status_0, int status_1)
-{
-	waitpid(pid[0], &status_0, 0);
-	waitpid(pid[1], &status_0, 0);
-	if (WIFEXITED(status_0))
-		status_1 = WEXITSTATUS(status_0);
-	return (status_1)
-}
 
 int	main(int argc, char **argv, char **env)
 {
-	int	fd_pipe[2];
-	int	pid[2];
-	int	status[3];
-	char **spl2;
-	char **spl3;
+	int		fd_pipe[2];
+	int		pid[2];
+	int		status[3];
+	char	**spl2;
+	char	**spl3;
 
 	take_errors(argc);
 	if (pipe(fd_pipe) < 0)
