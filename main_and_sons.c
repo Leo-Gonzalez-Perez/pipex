@@ -128,7 +128,6 @@ int	main(int argc, char **argv, char **env)
 	status[0] = 0;
 	status[1] = 0;
 	status[2] = 0;
-	
 	take_errors(argc);
 	if (pipe(fd_pipe) < 0)
 		(perror("pipe's function error"), exit (1));

@@ -12,7 +12,7 @@
 
 # Variables
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 SRC = main_and_sons.c split_joing_paths.c aux_1.c aux_2.c aux_3.c
 
 OBJ = $(SRC:.c=.o)
